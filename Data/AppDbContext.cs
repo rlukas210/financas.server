@@ -1,0 +1,12 @@
+using financas.server.Models;
+using Microsoft.EntityFrameworkCore;
+
+namespace financas.server.Data
+{
+    public class AppDbContext : DbContext
+    {
+        public AppDbContext(DbContextOptions options) : base(options) { }
+
+        public DbSet<Usuarios> Usuarios { get; set; }
+    }
+}

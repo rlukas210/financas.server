@@ -1,0 +1,6 @@
+@FinancasServer_HostAddress = http://localhost:5102
+
+GET {{FinancasServer_HostAddress}}/
+Accept: application/json
+
+###
