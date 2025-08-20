@@ -1,4 +1,7 @@
+using financas.server.Data;
 using Microsoft.OpenApi.Models;
+using Microsoft.EntityFrameworkCore;
+using financas.server.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,9 +12,13 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Logging.AddSimpleConsole(c => c.SingleLine = true);
-var app = builder.Build();
 
+var connectionString = builder.Configuration.GetConnectionString("AppDbConnectionString");
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseNpgsql(connectionString));
+//builder.Logging.AddSimpleConsole(c => c.SingleLine = true);
+var app = builder.Build();
+app.ApplyMigrations();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

@@ -8,5 +8,8 @@ namespace financas.server.Data
         public AppDbContext(DbContextOptions options) : base(options) { }
 
         public DbSet<Usuarios> Usuarios { get; set; }
+        public DbSet<Cartao> Cartoes { get; set; }
+        public DbSet<Categorias> Categorias { get; set; }
+
     }
 }
