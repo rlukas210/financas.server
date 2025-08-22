@@ -10,6 +10,9 @@ namespace financas.server.Data
         public DbSet<Usuarios> Usuarios { get; set; }
         public DbSet<Cartao> Cartoes { get; set; }
         public DbSet<Categorias> Categorias { get; set; }
+        public DbSet<Despesas> Despesas { get; set; }
+        public DbSet<FaturaCartao> FaturasCartao { get; set; }
+        
 
     }
 }

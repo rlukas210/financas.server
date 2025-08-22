@@ -12,6 +12,7 @@ namespace financas.server.Models
         public List<DespesaCartao> Despesas { get; set; } = new List<DespesaCartao>();
         public Usuarios UsuarioInclusao { get; set; }
 
+        public FaturaCartao() { }
         public FaturaCartao(decimal valorFatura, DateTime dataVencimento, Cartao cartao, Usuarios usuarioInclusao)
         {
             ValorFatura = valorFatura;

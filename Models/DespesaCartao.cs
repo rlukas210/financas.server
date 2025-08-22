@@ -1,10 +1,15 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace financas.server.Models
 {
     public class DespesaCartao
     {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int IdDespesa { get; set; }
         public string NomeDespesa { get; set; }
         public string FantasiaDespesa { get; set; }
+        //[ForeignKey(name: "CategoriaDespesa")]
         public Categorias CategoriaDespesa { get; set; }
         public decimal ValorDespesa { get; set; }
         public DateTime Data { get; set; }
@@ -13,6 +18,7 @@ namespace financas.server.Models
         public int ParcelaAtual { get; set; } = 1;
         public int ParcelaTotal { get; set; } = 1;
 
+    public DespesaCartao() { } 
         public DespesaCartao(string nomeDespesa, string fantasiaDespesa, Categorias categoriaDespesa, decimal valorDespesa, DateTime data, string? descricao, Cartao cartao, int parcelaAtual, int parcelaTotal)
         {
             NomeDespesa = nomeDespesa;
