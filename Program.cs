@@ -1,7 +1,7 @@
-using financas.server.Data;
-using Microsoft.OpenApi.Models;
+using FinancasServer.Data;
+using FinancasServer.Services;
 using Microsoft.EntityFrameworkCore;
-using financas.server.Services;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,9 +14,16 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var connectionString = builder.Configuration.GetConnectionString("AppDbConnectionString");
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(connectionString));
-//builder.Logging.AddSimpleConsole(c => c.SingleLine = true);
+var serverVersion = new MariaDbServerVersion(ServerVersion.AutoDetect(connectionString));
+
+builder.Services.AddDbContext<AppDbContext>(
+    dbContextOptions => dbContextOptions
+    .UseMySql(connectionString, serverVersion)
+    .LogTo(Console.WriteLine, LogLevel.Information)
+                .EnableSensitiveDataLogging()
+                .EnableDetailedErrors()
+            );
+            
 var app = builder.Build();
 app.ApplyMigrations();
 // Configure the HTTP request pipeline.

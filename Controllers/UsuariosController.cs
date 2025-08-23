@@ -1,4 +1,4 @@
-using financas.server.Data;
+/* using financas.server.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace financas.server.Controllers
@@ -14,4 +14,4 @@ namespace financas.server.Controllers
             _appDbContext = appDbContext;
         }
     }
-}
+} */

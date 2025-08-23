@@ -1,7 +1,7 @@
-using financas.server.Data;
+using FinancasServer.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace financas.server.Services
+namespace FinancasServer.Services
 {
     public static class AutoMigrations
     {
