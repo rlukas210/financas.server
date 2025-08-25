@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace FinancasServer.Models;
+﻿namespace FinancasServer.Models;
 
 public partial class TransacaoDinheiro
 {

@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FinancasServer.Models;
 
-public partial class Fatura
+[Table("faturas")]
+public class Fatura
 {
     public int IdFatura { get; set; }
 
