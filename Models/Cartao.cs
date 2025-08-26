@@ -1,55 +1,28 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace FinancasServer.Models;
-
-[Table("Cartoes")]
-public class Cartao
+namespace financas.server.Models
 {
-    [Column("idCartao")]
-    [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+   public class Cartao
+{
     public int IdCartao { get; set; }
-
-    [Required]
-    [Column("nomeCartao"), MaxLength(50)]
     public string NomeCartao { get; set; }
-
-    [Required]
-    [Column("bandeira"), MaxLength(50)]
     public string Bandeira { get; set; }
-
-    //TODO: ???
-    // IdUsuario está referenciando o que?
-    [ForeignKey("IdUsuario")]
-    [Column("idUsuario")]
     public int IdUsuario { get; set; }
-    public Usuario Usuario { get; set; }
-
-    [Column("numero"), MaxLength(4)]
-    public string Numero { get; set; }
-
-    [Column("validade")]
+    public string Numero { get; set; }  // apenas 4 dígitos
     public DateOnly Validade { get; set; }
-
-    [Column("limite")]
     public decimal Limite { get; set; }
+    public StatusCartao Status { get; set; }
+    public string? DescricaoStatus { get; set; }
 
-    [Column("status")]
-    public string Status { get; set; }
-
-    [Column("descricaoStatus"), MaxLength(50)]
-    public string DescricaoStatus { get; set; }
-
-    public virtual ICollection<Fatura> Faturas { get; set; } = new List<Fatura>();
-
-    public virtual Usuario IdUsuarioNavigation { get; set; }
-
-    public virtual ICollection<TransacaoCartao> TransacaoCartoes { get; set; } = new List<TransacaoCartao>();
+    public virtual Usuario Usuario { get; set; }
+    public virtual ICollection<Transacao> Transacoes { get; set; }
+    public virtual ICollection<Fatura> Faturas { get; set; }
 }
 
 public enum StatusCartao
 {
     Ativo,
     Bloqueado,
-    Cancelado
+    Cancelado,
+    Perdido
+}
+
 }
