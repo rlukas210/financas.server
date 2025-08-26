@@ -5,16 +5,11 @@ namespace FinancasServer.Data;
 
 public partial class AppDbContext : DbContext
 {
-    public AppDbContext()
-    {
-    }
+    public AppDbContext(){}
 
-    public AppDbContext(DbContextOptions<AppDbContext> options)
-        : base(options)
-    {
-    }
+    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options){}
 
-    public virtual DbSet<Cartao> Cartaos { get; set; }
+    public virtual DbSet<Cartao> Cartoes { get; set; }
 
     public virtual DbSet<Categoria> Categorias { get; set; }
 
@@ -26,15 +21,15 @@ public partial class AppDbContext : DbContext
 
     public virtual DbSet<TransacaoCartao> TransacaoCartoes { get; set; }
 
-    public virtual DbSet<TransacaoDinheiro> TransacaoDinheiros { get; set; }
+    public virtual DbSet<TransacaoDinheiro> TransacoesDinheiro { get; set; }
 
     public virtual DbSet<TransacaoPessoa> TransacaoPessoas { get; set; }
 
     public virtual DbSet<Usuario> Usuarios { get; set; }
 
-   /* protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
- */
+    //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    // #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+ 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder
@@ -43,31 +38,31 @@ public partial class AppDbContext : DbContext
 
         modelBuilder.Entity<Cartao>(entity =>
         {
-            entity.HasKey(e => e.idCartao).HasName("PRIMARY");
+            entity.HasKey(e => e.IdCartao).HasName("PRIMARY");
 
             entity.ToTable("cartao");
 
-            entity.HasIndex(e => e.idUsuario, "idUsuario");
+            entity.HasIndex(e => e.IdUsuario, "idUsuario");
 
-            entity.Property(e => e.idCartao).HasColumnType("int(11)");
-            entity.Property(e => e.bandeira)
+            entity.Property(e => e.IdCartao).HasColumnType("int(11)");
+            entity.Property(e => e.Bandeira)
                 .IsRequired()
                 .HasMaxLength(50);
-            entity.Property(e => e.descricaoStatus).HasMaxLength(255);
-            entity.Property(e => e.idUsuario).HasColumnType("int(11)");
-            entity.Property(e => e.limite).HasPrecision(10, 2);
-            entity.Property(e => e.nomeCartao)
+            entity.Property(e => e.DescricaoStatus).HasMaxLength(255);
+            entity.Property(e => e.IdUsuario).HasColumnType("int(11)");
+            entity.Property(e => e.Limite).HasPrecision(10, 2);
+            entity.Property(e => e.NomeCartao)
                 .IsRequired()
                 .HasMaxLength(100);
-            entity.Property(e => e.numero)
+            entity.Property(e => e.Numero)
                 .IsRequired()
                 .HasMaxLength(4);
-            entity.Property(e => e.status)
+            entity.Property(e => e.Status)
                 .HasDefaultValueSql("'ativo'")
                 .HasColumnType("enum('ativo','bloqueado','cancelado','perdido')");
 
             entity.HasOne(d => d.IdUsuarioNavigation).WithMany(p => p.Cartaos)
-                .HasForeignKey(d => d.idUsuario)
+                .HasForeignKey(d => d.IdUsuario)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("cartao_ibfk_1");
         });
@@ -332,4 +327,4 @@ public partial class AppDbContext : DbContext
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
-}git 
+}
