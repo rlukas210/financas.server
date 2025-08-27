@@ -1,13 +1,20 @@
+using System.CodeDom.Compiler;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace financas.server.Models
 {
+    [NotMapped]
     public class Boleto
     {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         public int TransacaoId { get; set; }
         public virtual Transacao Transacao { get; set; }
-
+        [Required, MaxLength(200)]
         public string Cedente { get; set; } // Quem emite
+        [Required, MaxLength(200)]
         public string Sacado { get; set; }  // Quem paga
 
         public string LinhaDigitavel { get; set; }

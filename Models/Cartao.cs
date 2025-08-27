@@ -1,7 +1,11 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace financas.server.Models
 {
    public class Cartao
 {
+    [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int IdCartao { get; set; }
     public string NomeCartao { get; set; }
     public string Bandeira { get; set; }
