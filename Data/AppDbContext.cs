@@ -12,6 +12,7 @@ public class AppDbContext : DbContext
     public DbSet<Cartao> Cartoes { get; set; }
     public DbSet<Transacao> Transacoes { get; set; }
     public DbSet<Fatura> Faturas { get; set; }
+    public DbSet<Boleto> Boletos { get; set; }
     public DbSet<Pagamento> Pagamentos { get; set; }
     public DbSet<DivisaoTransacao> DivisoesTransacao { get; set; }
 

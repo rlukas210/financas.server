@@ -30,7 +30,7 @@ namespace financas.server.Models
 
     public int? FaturaId { get; set; }
     public virtual Fatura? Fatura { get; set; }
-
+    public virtual Boleto? Boleto { get; set; }
     public virtual ICollection<DivisaoTransacao> Divisoes { get; set; }
 }
 

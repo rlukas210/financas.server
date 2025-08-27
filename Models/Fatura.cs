@@ -5,7 +5,7 @@ namespace financas.server.Models
     public int IdFatura { get; set; }
 
     public int IdUsuario { get; set; }
-    public virtual Usuario Usuario { get; set; }
+ //   public virtual Usuario Usuario { get; set; }
 
     public int IdCartao { get; set; }
     public virtual Cartao Cartao { get; set; }
