@@ -1,7 +1,12 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace financas.server.Models
+#pragma warning disable CS8632
 {
    public class Transacao
 {
+    [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int IdTransacao { get; set; }
 
     public string Descricao { get; set; }
@@ -25,7 +30,7 @@ namespace financas.server.Models
 
     public DateTime DataCriacao { get; set; } = DateTime.Now;
 
-    public int UsuarioInclusao { get; set; }
+    public Guid UsuarioInclusao { get; set; }
     public virtual Usuario Usuario { get; set; }
 
     public int? FaturaId { get; set; }

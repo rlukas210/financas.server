@@ -26,6 +26,7 @@ namespace financas.server.Models
         public decimal? Desconto { get; set; }
 
         public DateOnly Vencimento { get; set; }
+        #pragma warning disable CS8632
         public string? PixCopiadoColado { get; set; } // Para boletos híbridos com PIX
 
         public string? NossoNumero { get; set; }

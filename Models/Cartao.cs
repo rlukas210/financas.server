@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace financas.server.Models
+#pragma warning disable CS8632
 {
    public class Cartao
 {
@@ -9,7 +10,6 @@ namespace financas.server.Models
     public int IdCartao { get; set; }
     public string NomeCartao { get; set; }
     public string Bandeira { get; set; }
-    public int IdUsuario { get; set; }
     public string Numero { get; set; }  // apenas 4 dígitos
     public DateOnly Validade { get; set; }
     public decimal Limite { get; set; }

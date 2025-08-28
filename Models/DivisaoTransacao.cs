@@ -7,11 +7,11 @@ namespace financas.server.Models
     public int TransacaoId { get; set; }
     public virtual Transacao Transacao { get; set; }
 
-    public int UsuarioId { get; set; }
+    public Guid UsuarioId { get; set; }
     public virtual Usuario Usuario { get; set; }
 
     public decimal Valor { get; set; }
-
+    #pragma warning disable CS8632
     public string? Observacao { get; set; }
 }
 

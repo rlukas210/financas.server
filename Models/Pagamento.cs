@@ -1,7 +1,12 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace financas.server.Models
+#pragma warning disable CS8632
 {
     public class Pagamento
 {
+    [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int IdPagamento { get; set; }
 
     public decimal Valor { get; set; }
@@ -17,6 +22,7 @@ namespace financas.server.Models
     public string? Observacao { get; set; }
 
     public int? FaturaId { get; set; }
+    #pragma warning disable CS8632
     public virtual Fatura? Fatura { get; set; }
 
     public int? TransacaoId { get; set; }
