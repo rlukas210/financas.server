@@ -20,6 +20,10 @@ public class AppDbContext : DbContext
     {
         // Enums salvos como string no banco
         modelBuilder.Entity<Usuario>()
+            .HasIndex(e => new { e.IdUsuario, e.Email })
+            .IsUnique();
+
+        modelBuilder.Entity<Usuario>()
             .Property(u => u.Status)
             .HasConversion<string>();
 
@@ -54,26 +58,29 @@ public class AppDbContext : DbContext
         // Chave composta opcional para evitar conflitos futuros
         modelBuilder.Entity<DivisaoTransacao>()
             .HasIndex(d => new { d.TransacaoId, d.UsuarioId })
-            .IsUnique(false); // Permite mais de uma divisão por transação por usuário
+            .IsUnique(false); //  mais de uma divisão por transação por usuário
 
         // Relacionamento entre Fatura e Transacoes
         modelBuilder.Entity<Fatura>()
             .HasMany(f => f.Transacoes)
             .WithOne(t => t.Fatura)
             .HasForeignKey(t => t.FaturaId)
+            .HasConstraintName("FK_Transacao_Fatura")
             .OnDelete(DeleteBehavior.SetNull);
 
         // Pagamento pode estar ligado a Fatura OU a Transacao
         modelBuilder.Entity<Pagamento>()
             .HasOne(p => p.Fatura)
             .WithMany(f => f.Pagamentos)
-            .HasForeignKey(p => p.FaturaId)
+            //  .HasForeignKey(p => p.FaturaId)
+            .HasConstraintName("FK_Pagamento_Fatura")
             .OnDelete(DeleteBehavior.SetNull);
 
         modelBuilder.Entity<Pagamento>()
             .HasOne(p => p.Transacao)
             .WithMany()
-            .HasForeignKey(p => p.TransacaoId)
+            // .HasForeignKey(p => p.TransacaoId)
+            .HasConstraintName("FK_Pagamento_Transacao")
             .OnDelete(DeleteBehavior.SetNull);
 
         // Relacionamento DivisaoTransacao

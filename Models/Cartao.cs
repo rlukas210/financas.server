@@ -1,20 +1,24 @@
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace financas.server.Models
-#pragma warning disable CS8632
 {
    public class Cartao
 {
-    [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    [Key]
     public int IdCartao { get; set; }
+    [Required, MaxLength(100)]
     public string NomeCartao { get; set; }
+    [Required, MaxLength(100)]
     public string Bandeira { get; set; }
-    public string Numero { get; set; }  // apenas 4 dígitos
-    public DateOnly Validade { get; set; }
+    [Required, MinLength(4), MaxLength(4)]
+    public string NumeroCartao { get; set; }  // apenas 4 dígitos
+    [Required]
+    public DateOnly ValidadeCartao { get; set; }
+    [Required, Precision(10,2)]
     public decimal Limite { get; set; }
-    public StatusCartao Status { get; set; }
-    public string? DescricaoStatus { get; set; }
+    public StatusCartao Status { get; set; } = StatusCartao.Ativo;
+    public string? Observacao { get; set; }
 
     public virtual Usuario Usuario { get; set; }
     public virtual ICollection<Transacao> Transacoes { get; set; }

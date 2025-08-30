@@ -1,18 +1,22 @@
+using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
+
 namespace financas.server.Models
 {
-   public class DivisaoTransacao
-{
-    public int Id { get; set; }
-
-    public int TransacaoId { get; set; }
-    public virtual Transacao Transacao { get; set; }
-
-    public Guid UsuarioId { get; set; }
-    public virtual Usuario Usuario { get; set; }
-
-    public decimal Valor { get; set; }
-    #pragma warning disable CS8632
-    public string? Observacao { get; set; }
-}
+    public class DivisaoTransacao
+    {
+        [Key]
+        public int IdTransacao { get; set; }
+        [Required]
+        public virtual Transacao Transacao { get; set; }
+        [Required]
+        public virtual Usuario Usuario { get; set; }
+        [Required, Precision(10, 2)]
+        public decimal Valor { get; set; }
+        [MaxLength(200)]
+        public string? Observacao { get; set; }
+        public int TransacaoId { get; set; }
+        public Guid UsuarioId { get; set; }
+    }
 
 }

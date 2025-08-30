@@ -1,31 +1,28 @@
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace financas.server.Models
-#pragma warning disable CS8632
 {
     public class Pagamento
 {
-    [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    [Key]
     public int IdPagamento { get; set; }
 
+    [Required, Precision(10,2)]
     public decimal Valor { get; set; }
-
+    [Required]
     public DateOnly DataPagamento { get; set; }
-
+   // [Required]
     public FormaPagamento FormaPagamento { get; set; }
 
-    public StatusPagamento Status { get; set; }
+    public StatusPagamento Status { get; set; } = StatusPagamento.Pendente;
 
     public DateTime DataCriacao { get; set; } = DateTime.Now;
-
+    [MaxLength(200)]
     public string? Observacao { get; set; }
 
-    public int? FaturaId { get; set; }
-    #pragma warning disable CS8632
     public virtual Fatura? Fatura { get; set; }
 
-    public int? TransacaoId { get; set; }
     public virtual Transacao? Transacao { get; set; }
 }
 

@@ -1,36 +1,26 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace financas.server.Models
-#pragma warning disable CS8632
 {
-    //TODO: DUPLICIDADE DE CHAVES ESTRANGEIRAS
-#warning There are duplicate foreign keys
-#warning Check the relationships and ensure they are correctly defined
-    
    public class Fatura
     {
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]
         public int IdFatura { get; set; }
-
-       // public Guid IdUsuario { get; set; }
-        public virtual Usuario Usuario { get; set; }
-
-       // public int IdCartao { get; set; }
+        [Required]
+        public virtual Usuario Dono { get; set; }
+        [Required]
         public virtual Cartao Cartao { get; set; }
-
-        public int Mes { get; set; }
-        public int Ano { get; set; }
-
+        [Required]
+       public DateOnly MesReferencia { get; set; } // Mês/Ano da fatura
+        [Required, Precision(10,2)]
         public decimal ValorTotal { get; set; }
-
-        public StatusFatura Status { get; set; }
-
+        public StatusFatura Status { get; set; } = StatusFatura.Pendente;
+        
         public DateTime DataCriacao { get; set; } = DateTime.Now;
+        [MaxLength(200)]
         public string? Observacao { get; set; }
-
-        // public int UsuarioInclusao { get; set; }
-        // public virtual Usuario UsuarioInclusaoNavigation { get; set; }
 
         public virtual ICollection<Transacao> Transacoes { get; set; }
         public virtual ICollection<Pagamento> Pagamentos { get; set; }
