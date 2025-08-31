@@ -24,7 +24,7 @@ public class AppDbContext : DbContext
             .IsUnique();
 
         modelBuilder.Entity<Usuario>()
-            .Property(u => u.Status)
+            .Property(u => u.StatusUsuario)
             .HasConversion<string>();
 
         modelBuilder.Entity<Cartao>()
@@ -56,10 +56,10 @@ public class AppDbContext : DbContext
             .HasConversion<string>();
 
         // Chave composta opcional para evitar conflitos futuros
-        modelBuilder.Entity<DivisaoTransacao>()
+      /*  modelBuilder.Entity<DivisaoTransacao>()
             .HasIndex(d => new { d.TransacaoId, d.UsuarioId })
             .IsUnique(false); //  mais de uma divisão por transação por usuário
-
+*/
         // Relacionamento entre Fatura e Transacoes
         modelBuilder.Entity<Fatura>()
             .HasMany(f => f.Transacoes)
@@ -89,9 +89,9 @@ public class AppDbContext : DbContext
             .WithMany(t => t.Divisoes)
             .HasForeignKey(d => d.TransacaoId);
 
-        modelBuilder.Entity<DivisaoTransacao>()
+     /*   modelBuilder.Entity<DivisaoTransacao>()
             .HasOne(d => d.Usuario)
             .WithMany()
-            .HasForeignKey(d => d.UsuarioId);
+            .HasForeignKey(d => d.UsuarioId); */
     }
 }
