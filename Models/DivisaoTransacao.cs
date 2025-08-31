@@ -1,22 +1,24 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
 namespace financas.server.Models
 {
     public class DivisaoTransacao
     {
-        [Key]
+        [Key, Column("id_divisao_transacao")]
         public int IdTransacao { get; set; }
-        [Required]
+        [Required, Column("transacao")]
         public virtual Transacao Transacao { get; set; }
-        [Required]
+        [Required, Column("id_usuario")]
         public virtual Usuario Usuario { get; set; }
-        [Required, Precision(10, 2)]
+        [Required, Column("valor"), Precision(10, 2)]
         public decimal Valor { get; set; }
-        [MaxLength(200)]
+        [Column("observacao"), MaxLength(200)]
         public string? Observacao { get; set; }
+        [Column("transacao_id")]
         public int TransacaoId { get; set; }
-        public Guid UsuarioId { get; set; }
+      //  public Guid UsuarioId { get; set; }
     }
 
 }
