@@ -1,36 +1,69 @@
--- Active: 1749644233717@@127.0.0.1@3306@financasdev
-CREATE TABLE usuarios (
-    idUsuario INT PRIMARY KEY NOT NULL,
-    nome VARCHAR(100) NOT NULL,
-    email VARCHAR(100) NOT NULL UNIQUE,
-    senha VARCHAR(255) NOT NULL,
-    cargo VARCHAR(50) NOT NULL,
-    status ENUM('ativo', 'inativo') DEFAULT 'ativo'
-);
+-- Active: 1749644233717@@127.0.0.1@3306@teste3d
+    CREATE TABLE usuario (
+        idUsuario INT PRIMARY KEY NOT NULL,
+        nomeUsuario VARCHAR(100) NOT NULL,
+        emailUsuario VARCHAR(100) NOT NULL UNIQUE,
+        senhaUsuario VARCHAR(255) NOT NULL,
+        cargoUsuario VARCHAR(50) NOT NULL,
+        statusUsuario ENUM('ativo', 'inativo') DEFAULT 'ativo'
+    );
 
-CREATE TABLE cartao (
-    idCartao INT AUTO_INCREMENT PRIMARY KEY,
-    nomeCartao VARCHAR(100) NOT NULL,
-    bandeira VARCHAR(50) NOT NULL,
-    idUsuario INT NOT NULL,
-    numero VARCHAR(4) NOT NULL,
-    validade DATE NOT NULL,
-    limite DECIMAL(10, 2) NOT NULL,
-    status ENUM('ativo','bloqueado','cancelado','perdido') DEFAULT 'ativo',
-    descricaoStatus VARCHAR(255),
-    FOREIGN KEY (idUsuario) REFERENCES usuarios(idUsuario)
-);
+    CREATE TABLE cartoes (
+        idCartao INT PRIMARY KEY NOT NULL,
+        nomeCartao VARCHAR(100) NOT NULL,
+        bandeiraCartao VARCHAR(50) NOT NULL,
+        tipoCartao ENUM('credito', 'debito', 'ambos') NOT NULL,
+        numeroCartao VARCHAR(4) NOT NULL DEFAULT 0000,
+        validadeCartao DATE NOT NULL,
+        limiteCartao DECIMAL(10, 2) NOT NULL,
+        statusCartao ENUM('ativo','bloqueado','cancelado','perdido') DEFAULT 'ativo',
+        observacaoCartao VARCHAR(255),
+        idUsuario INT NOT NULL,
+        FOREIGN KEY (idUsuario) REFERENCES usuario(idUsuario)
+    );
 
-CREATE TABLE categorias (
-    idCategoria INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL,
-    descricao VARCHAR(255)
-);
+    CREATE TABLE categorias (
+        idCategoria INT PRIMARY KEY NOT NULL,
+        nomeCategoria VARCHAR(100) NOT NULL,
+        descricaoCategoria VARCHAR(255)
+    );
 
-CREATE TABLE transacaoCartao (
-    idTransacao INT AUTO_INCREMENT PRIMARY KEY,
+    CREATE TABLE  faturas(
+        idFatura INT PRIMARY KEY NOT NULL,
+        idUsuario INT NOT NULL,
+        idCartao INT NOT NULL,
+        dataReferencia DATE NOT NULL,
+        valorTotal DECIMAL(10, 2) NOT NULL,
+        statusFatura ENUM('pendente', 'paga', 'cancelada') DEFAULT 'pendente',
+        dataCriacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (idUsuario) REFERENCES usuario(idUsuario),
+        FOREIGN KEY (idCartao) REFERENCES cartoes(idCartao)
+    );
+    CREATE TABLE boletos (
+    idBoleto INT PRIMARY KEY NOT NULL,
+    nomeBoleto VARCHAR(255) NOT NULL,
+    donoBoleto INT NOT NULL,
+    cedenteBoleto VARCHAR(128),
+    sacadoBoleto VARCHAR(128),
+    codigoBoleto VARCHAR(48),
+    valorNominal DECIMAL(10, 2) NOT NULL,
+    jurosBoleto DECIMAL(10, 2),
+    multaBoleto DECIMAL(10, 2),
+    descontoBoleto DECIMAL(10, 2),
+    qrCodePix LONGTEXT,
+    dataVencimento DATE NOT NULL,
+    statusBoleto ENUM('pendente', 'pago', 'cancelado') DEFAULT 'pendente',
+    dataCriacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    observacaoBoleto VARCHAR(255),
+    usuarioInclusao INT NOT NULL,
+    FOREIGN KEY (donoBoleto) REFERENCES usuario(idUsuario),
+    FOREIGN KEY (usuarioInclusao) REFERENCES usuario(idUsuario)
+    );
+
+CREATE TABLE despesaCartao (
+    idDespesa INT PRIMARY KEY NOT NULL,
     idCartao INT NOT NULL,
-    descricao VARCHAR(255) NOT NULL,
+    natureza ENUM('credito', 'debito') NOT NULL,
     valor DECIMAL(10, 2) NOT NULL,
     data DATE NOT NULL,
     parcelaAtual INT NOT NULL DEFAULT 1,
@@ -40,75 +73,34 @@ CREATE TABLE transacaoCartao (
     data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     observacao VARCHAR(255),
     usuarioInclusao INT NOT NULL,
-    FOREIGN KEY (usuarioInclusao) REFERENCES usuarios(idUsuario),
-    FOREIGN KEY (idCartao) REFERENCES cartao(idCartao),
+    FOREIGN KEY (usuarioInclusao) REFERENCES usuario(idUsuario),
+    FOREIGN KEY (idCartao) REFERENCES cartoes(idCartao),
     FOREIGN KEY (categoria) REFERENCES categorias(idCategoria)
 );
 
-CREATE TABLE transacaoBoleto (
-    idTransacao INT AUTO_INCREMENT PRIMARY KEY,
-    descricao VARCHAR(255) NOT NULL,
+CREATE TABLE divisaoTransacao(
+    idDivisao INT PRIMARY KEY NOT NULL,
+    idDespesa INT NOT NULL,
+    donoDespesa INT NOT NULL,
     valor DECIMAL(10, 2) NOT NULL,
-    data DATE NOT NULL,
-    categoria INT NOT NULL,
-    status ENUM('pendente', 'paga', 'cancelada') DEFAULT 'pendente',
+    status ENUM('pendente', 'pago', 'cancelado') DEFAULT 'pendente',
     data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    observacao VARCHAR(255),
-    usuarioInclusao INT NOT NULL,
-    FOREIGN KEY (usuarioInclusao) REFERENCES usuarios(idUsuario),
-    FOREIGN KEY (categoria) REFERENCES categorias(idCategoria)
+    FOREIGN KEY (idDespesa) REFERENCES despesaCartao(idDespesa),
+    FOREIGN KEY (donoDespesa) REFERENCES usuario(idUsuario)
 );
 
-CREATE TABLE faturas(
-    idFatura INT AUTO_INCREMENT PRIMARY KEY,
-    idUsuario INT NOT NULL,
+CREATE TABLE transacoes(
+    idTransacao INT PRIMARY KEY NOT NULL,
+    nomeTransacao VARCHAR(100) NOT NULL,
+    valorTransacao DECIMAL(10, 2) NOT NULL,
+    dataTransacao DATE NOT NULL,
     idCartao INT NOT NULL,
-    mes INT NOT NULL,
-    ano INT NOT NULL,
-    valorTotal DECIMAL(10, 2) NOT NULL,
-    status ENUM('pendente', 'paga', 'cancelada') DEFAULT 'pendente',
-    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    observacao VARCHAR(255),
-    usuarioInclusao INT NOT NULL,
-    FOREIGN KEY (usuarioInclusao) REFERENCES usuarios(idUsuario),
-    FOREIGN KEY (idCartao) REFERENCES cartao(idCartao),
-    FOREIGN KEY (idUsuario) REFERENCES usuarios(idUsuario)
-);
-
-CREATE TABLE pagamentos(
-    idPagamento INT AUTO_INCREMENT PRIMARY KEY,
-    idFatura INT NOT NULL,
-    valor DECIMAL(10, 2) NOT NULL,
-    dataPagamento DATE NOT NULL,
-   # metodoPagamento ENUM('cartao', 'boleto', 'dinheiro') NOT NULL,
-    status ENUM('pendente', 'pago', 'pago parcialmennte', 'cancelado') DEFAULT 'pendente',
-    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (idFatura) REFERENCES faturas(idFatura)
-);
-
-CREATE TABLE transacaoDinheiro(
-    idTransacao INT AUTO_INCREMENT PRIMARY KEY,
-    descricao VARCHAR(255) NOT NULL,
-    valor DECIMAL(10, 2) NOT NULL,
-    data DATE NOT NULL,
-    categoria INT NOT NULL,
-    status ENUM('pendente', 'paga', 'cancelada') DEFAULT 'pendente',
-    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    observacao VARCHAR(255),
-    usuarioInclusao INT NOT NULL,
-    FOREIGN KEY (usuarioInclusao) REFERENCES usuarios(idUsuario),
-    FOREIGN KEY (categoria) REFERENCES categorias(idCategoria)
-    );
-
-CREATE TABLE transacaoPessoas(
-    idTransacao INT AUTO_INCREMENT PRIMARY KEY,
-    idUsuario INT NOT NULL,
-    valor DECIMAL(10, 2) NOT NULL,
-    natureza ENUM('credito', 'debito', 'boleto', 'dinheiro') NOT NULL,
-    status ENUM('pendente', 'paga', 'cancelada') DEFAULT 'pendente',
-    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    observacao VARCHAR(255),
-    usuarioInclusao INT NOT NULL,
-    FOREIGN KEY (usuarioInclusao) REFERENCES usuarios(idUsuario),
-    FOREIGN KEY (idUsuario) REFERENCES usuarios(idUsuario)
-);
+    idCategoria INT NOT NULL,
+    statusTransacao ENUM('pendente', 'paga', 'cancelada') DEFAULT 'pendente',
+    observacaoTransacao VARCHAR(255),
+    dataLancamento TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    donoId INT NOT NULL,
+    faturaId INT NOT NULL,
+    FOREIGN KEY (donoId) REFERENCES usuario(idUsuario),
+    FOREIGN KEY (faturaId) REFERENCES faturas(idFatura)
+)
