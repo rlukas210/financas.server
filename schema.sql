@@ -34,7 +34,7 @@
         idCartao INT NOT NULL,
         dataReferencia DATE NOT NULL,
         valorTotal DECIMAL(10, 2) NOT NULL,
-        statusFatura ENUM('pendente', 'paga', 'cancelada') DEFAULT 'pendente',
+        statusFatura ENUM('pendente', 'paga', 'atraso') DEFAULT 'pendente',
         dataCriacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (idUsuario) REFERENCES usuario(idUsuario),
         FOREIGN KEY (idCartao) REFERENCES cartoes(idCartao)
@@ -52,7 +52,7 @@
     descontoBoleto DECIMAL(10, 2),
     qrCodePix LONGTEXT,
     dataVencimento DATE NOT NULL,
-    statusBoleto ENUM('pendente', 'pago', 'cancelado') DEFAULT 'pendente',
+    statusBoleto ENUM('pendente', 'pago','atraso', 'cancelado') DEFAULT 'pendente',
     dataCriacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     observacaoBoleto VARCHAR(255),
     usuarioInclusao INT NOT NULL,
@@ -62,19 +62,19 @@
 
 CREATE TABLE despesaCartao (
     idDespesa INT PRIMARY KEY NOT NULL,
-    idCartao INT NOT NULL,
+    idFatura INT NOT NULL,
     natureza ENUM('credito', 'debito') NOT NULL,
     valor DECIMAL(10, 2) NOT NULL,
     data DATE NOT NULL,
     parcelaAtual INT NOT NULL DEFAULT 1,
     parcelaTotal INT NOT NULL DEFAULT 1,
     categoria INT NOT NULL,
-    status ENUM('pendente', 'paga', 'cancelada') DEFAULT 'pendente',
-    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    status ENUM('pendente', 'parcial', 'total', 'cancelada') DEFAULT 'pendente',
+    dataCriacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     observacao VARCHAR(255),
     usuarioInclusao INT NOT NULL,
     FOREIGN KEY (usuarioInclusao) REFERENCES usuario(idUsuario),
-    FOREIGN KEY (idCartao) REFERENCES cartoes(idCartao),
+    FOREIGN KEY (idFatura) REFERENCES faturas(idFatura),
     FOREIGN KEY (categoria) REFERENCES categorias(idCategoria)
 );
 
@@ -84,23 +84,20 @@ CREATE TABLE divisaoTransacao(
     donoDespesa INT NOT NULL,
     valor DECIMAL(10, 2) NOT NULL,
     status ENUM('pendente', 'pago', 'cancelado') DEFAULT 'pendente',
-    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    dataCriacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (idDespesa) REFERENCES despesaCartao(idDespesa),
     FOREIGN KEY (donoDespesa) REFERENCES usuario(idUsuario)
 );
 
 CREATE TABLE transacoes(
     idTransacao INT PRIMARY KEY NOT NULL,
-    nomeTransacao VARCHAR(100) NOT NULL,
-    valorTransacao DECIMAL(10, 2) NOT NULL,
+    naturezaTransacao ENUM('credito', 'debito', 'boleto', 'dinheiro') NOT NULL,
     dataTransacao DATE NOT NULL,
     idCartao INT NOT NULL,
     idCategoria INT NOT NULL,
-    statusTransacao ENUM('pendente', 'paga', 'cancelada') DEFAULT 'pendente',
+    statusTransacao ENUM('pendente', 'parcial', 'total', 'cancelada') DEFAULT 'pendente',
     observacaoTransacao VARCHAR(255),
     dataLancamento TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     donoId INT NOT NULL,
-    faturaId INT NOT NULL,
-    FOREIGN KEY (donoId) REFERENCES usuario(idUsuario),
-    FOREIGN KEY (faturaId) REFERENCES faturas(idFatura)
+    FOREIGN KEY (donoId) REFERENCES usuario(idUsuario)
 )
