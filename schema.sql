@@ -1,4 +1,3 @@
--- Active: 1749644233717@@127.0.0.1@3306@teste3d
     CREATE TABLE usuario (
         idUsuario INT PRIMARY KEY NOT NULL,
         nomeUsuario VARCHAR(100) NOT NULL,
