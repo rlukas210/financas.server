@@ -1,24 +1,12 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace FinancasServer.Models;
-
-public partial class categorias
+namespace financas.server.Models
 {
-    [Key]
-    [Column(TypeName = "int(11)")]
-    public int idCategoria { get; set; }
-
-    [Required]
-    [StringLength(100)]
-    public string nomeCategoria { get; set; }
-
-    [StringLength(255)]
-    public string descricaoCategoria { get; set; }
-
-    [InverseProperty("categoriaNavigation")]
-    public virtual ICollection<despesacartao> despesacartao { get; set; } = new List<despesacartao>();
+    public class Categorias
+    {
+        
+    }
 }

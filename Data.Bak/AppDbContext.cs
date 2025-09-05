@@ -51,13 +51,13 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.dataCriacao).HasDefaultValueSql("current_timestamp()");
             entity.Property(e => e.statusBoleto).HasDefaultValueSql("'pendente'");
 
-            entity.HasOne(d => d.donoBoletoNavigation).WithMany(p => p.boletosdonoBoletoNavigation)
+          /*  entity.HasOne(d => d.donoBoletoNavigation).WithMany(p => p.boletosdonoBoletoNavigation)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("boletos_ibfk_1");
 
             entity.HasOne(d => d.usuarioInclusaoNavigation).WithMany(p => p.boletosusuarioInclusaoNavigation)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("boletos_ibfk_2");
+                .HasConstraintName("boletos_ibfk_2"); */
         });
 
         modelBuilder.Entity<cartoes>(entity =>
@@ -68,9 +68,9 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.numeroCartao).HasDefaultValueSql("'0'");
             entity.Property(e => e.statusCartao).HasDefaultValueSql("'ativo'");
 
-            entity.HasOne(d => d.idUsuarioNavigation).WithMany(p => p.cartoes)
+        /*    entity.HasOne(d => d.idUsuarioNavigation).WithMany(p => p.cartoes)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("cartoes_ibfk_1");
+                .HasConstraintName("cartoes_ibfk_1"); */
         });
 
         modelBuilder.Entity<categorias>(entity =>
@@ -98,9 +98,9 @@ public partial class AppDbContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("despesacartao_ibfk_2");
 
-            entity.HasOne(d => d.usuarioInclusaoNavigation).WithMany(p => p.despesacartao)
+        /*    entity.HasOne(d => d.usuarioInclusaoNavigation).WithMany(p => p.despesacartao)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("despesacartao_ibfk_1");
+                .HasConstraintName("despesacartao_ibfk_1"); */
         });
 
         modelBuilder.Entity<divisaotransacao>(entity =>
@@ -111,9 +111,9 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.data_criacao).HasDefaultValueSql("current_timestamp()");
             entity.Property(e => e.status).HasDefaultValueSql("'pendente'");
 
-            entity.HasOne(d => d.donoDespesaNavigation).WithMany(p => p.divisaotransacao)
+          /*  entity.HasOne(d => d.donoDespesaNavigation).WithMany(p => p.divisaotransacao)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("divisaotransacao_ibfk_2");
+                .HasConstraintName("divisaotransacao_ibfk_2"); */
 
             entity.HasOne(d => d.idDespesaNavigation).WithMany(p => p.divisaotransacao)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -132,9 +132,9 @@ public partial class AppDbContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("faturas_ibfk_2");
 
-            entity.HasOne(d => d.idUsuarioNavigation).WithMany(p => p.faturas)
+          /*  entity.HasOne(d => d.idUsuarioNavigation).WithMany(p => p.faturas)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("faturas_ibfk_1");
+                .HasConstraintName("faturas_ibfk_1"); */
         });
 
         modelBuilder.Entity<transacoes>(entity =>
@@ -145,9 +145,9 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.dataLancamento).HasDefaultValueSql("current_timestamp()");
             entity.Property(e => e.statusTransacao).HasDefaultValueSql("'pendente'");
 
-            entity.HasOne(d => d.dono).WithMany(p => p.transacoes)
+          /*  entity.HasOne(d => d.dono).WithMany(p => p.transacoes)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("transacoes_ibfk_1");
+                .HasConstraintName("transacoes_ibfk_1"); */
 
             entity.HasOne(d => d.fatura).WithMany(p => p.transacoes)
                 .OnDelete(DeleteBehavior.ClientSetNull)

@@ -32,7 +32,7 @@ public partial class usuario
     [Column(TypeName = "enum('ativo','inativo')")]
     public string statusUsuario { get; set; }
 
-    [InverseProperty("donoBoletoNavigation")]
+/*    [InverseProperty("donoBoletoNavigation")]
     public virtual ICollection<boletos> boletosdonoBoletoNavigation { get; set; } = new List<boletos>();
 
     [InverseProperty("usuarioInclusaoNavigation")]
@@ -52,4 +52,5 @@ public partial class usuario
 
     [InverseProperty("dono")]
     public virtual ICollection<transacoes> transacoes { get; set; } = new List<transacoes>();
+    */
 }
