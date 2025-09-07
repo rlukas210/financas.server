@@ -1,4 +1,3 @@
--- Active: 1749644233717@@127.0.0.1@3306@teste3d
     CREATE TABLE usuario (
         idUsuario INT PRIMARY KEY NOT NULL,
         nomeUsuario VARCHAR(100) NOT NULL,
@@ -13,7 +12,7 @@
         nomeCartao VARCHAR(100) NOT NULL,
         bandeiraCartao VARCHAR(50) NOT NULL,
         tipoCartao ENUM('credito', 'debito', 'ambos') NOT NULL,
-        numeroCartao VARCHAR(4) NOT NULL DEFAULT 0000,
+        numeroCartao VARCHAR(4) NOT NULL DEFAULT '0000',
         validadeCartao DATE NOT NULL,
         limiteCartao DECIMAL(10, 2) NOT NULL,
         statusCartao ENUM('ativo','bloqueado','cancelado','perdido') DEFAULT 'ativo',
@@ -100,4 +99,4 @@ CREATE TABLE transacoes(
     dataLancamento TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     donoId INT NOT NULL,
     FOREIGN KEY (donoId) REFERENCES usuario(idUsuario)
-)
+);

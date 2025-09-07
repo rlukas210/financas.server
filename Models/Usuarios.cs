@@ -1,6 +1,6 @@
 namespace financas.server.Models
 {
-    public class Categorias
+    public class Usuarios
     {
         
     }
