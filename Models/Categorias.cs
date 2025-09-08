@@ -6,14 +6,8 @@ namespace financas.server.Models
     {
         [Key]
         public int IdCategoria { get; set; }
+        [Required, MaxLength(100)]
         public string NomeCategoria { get; set; }
-        public string Descricao { get; set; }
-
-        public Categorias(){}
-        public Categorias(string nomeCategoria, string descricao)
-        {
-            NomeCategoria = nomeCategoria;
-            Descricao = descricao;
-        }
+        public string? DescricaoCategoria { get; set; }   
     }
 }
