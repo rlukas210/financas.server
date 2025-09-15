@@ -42,9 +42,14 @@ builder.Services.AddScoped<IAuthService, Auth>();
 */
 var connectionString = builder.Configuration.GetConnectionString("AppDbConnectionString");
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(connectionString),
-    o => o.MapEnum<StatusUsuario>("statusUsuario")
-    );
+{
+    options.UseNpgsql(connectionString, npgsqlOptions =>
+    {
+        npgsqlOptions
+        .MapEnum<StatusUsuario>("statusUsuario")
+        .MapEnum<StatusCartao>("statusCartao");
+    });
+});
 //builder.Logging.AddSimpleConsole(c => c.SingleLine = true);
 
 
