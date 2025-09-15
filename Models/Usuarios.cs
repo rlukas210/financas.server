@@ -17,7 +17,9 @@ namespace financas.server.Models
     
     public enum StatusUsuario
     {
+        //[Display(Name = "ativo")]
         Ativo,
+        //[Display(Name = "inativo")]
         Inativo
     }
 }
