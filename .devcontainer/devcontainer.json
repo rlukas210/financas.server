@@ -1,0 +1,22 @@
+{
+    "name": "Financas .NET 9 + MariaDB",
+    "build": {
+        "dockerfile": "../Dockerfile"
+    },
+    "forwardPorts": [5000, 5001, 3306],
+    "postCreateCommand": "dotnet --version && mariadb --version",
+    "remoteUser": "root",
+    "features": {},
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "terminal.integrated.defaultProfile.linux": "bash"
+            },
+            "extensions": [
+                "ms-dotnettools.csharp",
+                "ms-azuretools.vscode-docker",
+                "ms-vscode.remote-containers"
+            ]
+        }
+    }
+}
