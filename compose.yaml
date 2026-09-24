@@ -1,0 +1,7 @@
+﻿services:
+  core:
+    image: core
+    build:
+      context: .
+      dockerfile: Core/Dockerfile
+
