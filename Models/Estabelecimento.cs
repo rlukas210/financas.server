@@ -13,4 +13,11 @@ public class Estabelecimento
 
     public string[] NomeSecEstabelecimento { get; set; }
 
+    //área das categorias:
+    //categoria da despesa e do estabelecimento
+    
+    public CategoriaEstabelecimento CategoriaEstabelecimento { get; set; }
+    
+    //essa é apenas uma sugestão, pode ser alterada durante a inserção de despesas
+    public Categoria CategoriaSugerida { get; set; }
 }

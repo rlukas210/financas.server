@@ -23,6 +23,8 @@ public class CategoriaController : ControllerBase
             return BadRequest("Não pode ficar em branco");
 
         _ctx.Categorias.Add(nomeCategoria);
+
+       _ctx.SaveChanges();
         return Ok(nomeCategoria);
     }
     
@@ -35,6 +37,20 @@ public class CategoriaController : ControllerBase
             if (categoria == null)
                 return BadRequest("Não pode ficar em branco, o item " + categoria);
         }
+
+        foreach (var categoria in nomesCategoria)
+        {
+            _ctx.Categorias.Add(categoria);
+        }
+        _ctx.SaveChanges();
         return Ok(nomesCategoria);
     }
+    
+    //GET: Obter todas
+    [HttpGet, Route("categorias")]
+    public IActionResult ListarCategorias()
+    {
+    return Ok(_ctx.Categorias.ToList());
+    }
+  
 }
