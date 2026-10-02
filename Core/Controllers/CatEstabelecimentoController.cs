@@ -4,6 +4,7 @@ using Models.DbContext;
 
 namespace Core.Controllers;
 
+[ApiController]
 public class CatEstabelecimentoController : Controller
 {
     private readonly AppDbContext _ctx;
@@ -14,6 +15,7 @@ public class CatEstabelecimentoController : Controller
     }
     
     //POST: Criar categoria individualmente
+    [HttpPost, Route("categorias/cadastrar/catestabelecimento")]
     public IActionResult CadastrarCatEstabelecimento(CategoriaEstabelecimento catEstabelecimento)
     {
         if (catEstabelecimento == null)

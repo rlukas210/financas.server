@@ -8,6 +8,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<Categoria> Categorias { get; set; }
     public DbSet<Estabelecimento>  Estabelecimentos { get; set; }
     public DbSet<CategoriaEstabelecimento> CatEstabelecimento { get; set; }
+    public DbSet<Cartao> Cartoes { get; set; }
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) 
         => optionsBuilder
