@@ -1,0 +1,12 @@
+estrutura dos endpoints:
+
+todos os endpoints devem começar em /api/v[numero_versao]/[endpoint]
+
+UsuarioControllers.cs:
+
+@/login -> Responsável por logar o usuário
+@/signup -> Responsável por criar um usuário novo (pode ser desativado ou remanejado para outro local)
+@/account -> respoonsável por gerenciar qualquer coisa do usuário. Pode ter outros métodos e endpoints
+
+@/cadastro -> responsável por tudo que envolve cadastro (categorias, estabelecimentos, etc)
+/* deve ser desenvolvido */
