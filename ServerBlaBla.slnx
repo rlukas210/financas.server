@@ -3,6 +3,8 @@
     <File Path="compose.yaml" />
     <File Path="docker-compose.yml" />
   </Folder>
+  <Project Path="Cli/Cli.csproj" />
   <Project Path="Core/Core.csproj" />
+  <Project Path="Email/Email.csproj" />
   <Project Path="Models/Models.csproj" />
 </Solution>
